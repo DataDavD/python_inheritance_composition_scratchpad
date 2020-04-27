@@ -8,6 +8,16 @@ print(dir(c))
 
 class MyCustomException(Exception):
     """this is a customer exception"""
-    pass
+    def __str__(self):
+        return "print this custom check for datadavd"
 
-raise MyCustomException()
+
+class MyCustomExceptionTwo(MyCustomException):
+    """this is a customer exception"""
+    def __str__(self):
+        return "print this custom check 2 for datadavd"
+
+try:
+    raise MyCustomExceptionTwo
+except Exception as e:
+    print(e)
