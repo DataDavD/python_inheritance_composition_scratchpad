@@ -1,0 +1,13 @@
+class MyClass:
+    pass
+
+c = MyClass()
+
+print(dir(c))
+
+
+class MyCustomException(Exception):
+    """this is a customer exception"""
+    pass
+
+raise MyCustomException()
