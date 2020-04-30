@@ -1,77 +1,43 @@
-from abc import abstractmethod, ABC
+# employee type implementations
 
+from hr import (
+    SalaryPolicy,
+    CommissionPolicy,
+    HourlyPolicy
+)
+from productivity import (
+    ManagerRole,
+    SecretaryRole,
+    SalesRole,
+    FactoryRole
+)
 
-# base employee class
-class Employee(ABC):
+class Employee:
     def __init__(self, id, name):
         self.id = id
         self.name = name
 
-    @abstractmethod
-    def calculate_payroll(self):
-        raise NotImplementedError
-
-class Worker(ABC):
-    def __init__(self, id, name):
-        self.id = id
-        self.name = name
-
-    @abstractmethod
-    def work(self, hours):
-        raise NotImplementedError
-
-
-# salary employees derives from employee
-class SalaryEmployee(Employee):
+class Manager(Employee, ManagerRole, SalaryPolicy):
     def __init__(self, id, name, weekly_salary):
+        SalaryPolicy.__init__(self, weekly_salary)
         super().__init__(id, name)
-        self.weekly_salary = weekly_salary
 
-    def calculate_payroll(self):
-        return self.weekly_salary
-
-
-# hourly employees derives from employee also
-class HourlyEmployee(Employee):
-    def __init__(self, id, name, hours_worked, hour_rate):
+class Secretary(Employee, SecretaryRole, SalaryPolicy):
+    def __init__(self, id, name, weekly_salary):
+        SalaryPolicy.__init__(self, weekly_salary)
         super().__init__(id, name)
-        self.hours_worked = hours_worked
-        self.hour_rate = hour_rate
 
-    def calculate_payroll(self):
-        return self.hours_worked * self.hour_rate
-
-
-# sales employees derives from employee, they earn a commission
-class CommissionEmployee(SalaryEmployee):
+class SalesPerson(Employee, SalesRole, CommissionPolicy):
     def __init__(self, id, name, weekly_salary, commission):
-        super().__init__(id, name, weekly_salary)
-        self.commission = commission
+        CommissionPolicy.__init__(self, weekly_salary, commission)
+        super().__init__(id, name)
 
-    def calculate_payroll(self):
-        fixed = super().calculate_payroll()
-        return fixed + self.commission
+class FactoryWorker(Employee, FactoryRole, HourlyPolicy):
+    def __init__(self, id, name, hours_worked, hour_rate):
+        HourlyPolicy.__init__(self, hours_worked, hour_rate)
+        super().__init__(id, name)
 
-
-# manager
-class Manager(SalaryEmployee, Worker):
-    def work(self, hours):
-        print(f'{self.name} screams and yells for {hours} hours.')
-
-
-# secretary
-class Secretary(SalaryEmployee, Worker):
-    def work(self, hours):
-        print(f'{self.name} expends {hours} hours doing office paperwork.')
-
-
-# sales person
-class SalesPerson(CommissionEmployee, Worker):
-    def work(self, hours):
-        print(f'{self.name} expends {hours} hours on the phone.')
-
-
-# factory workers
-class FactoryWorker(HourlyEmployee, Worker):
-    def work(self, hours):
-        print(f'{self.name} manufactures gadgets for {hours} hours.')
+class TemporarySecretary(Employee, SecretaryRole, HourlyPolicy):
+    def __init__(self, id, name, hours_worked, hour_rate):
+        HourlyPolicy.__init__(self, hours_worked, hour_rate)
+        super().__init__(id, name)
