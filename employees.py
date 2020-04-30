@@ -1,8 +1,24 @@
+from abc import abstractmethod, ABC
+
+
 # base employee class
-class Employee:
+class Employee(ABC):
     def __init__(self, id, name):
         self.id = id
         self.name = name
+
+    @abstractmethod
+    def calculate_payroll(self):
+        raise NotImplementedError
+
+class Worker(ABC):
+    def __init__(self, id, name):
+        self.id = id
+        self.name = name
+
+    @abstractmethod
+    def work(self, hours):
+        raise NotImplementedError
 
 
 # salary employees derives from employee
@@ -38,24 +54,24 @@ class CommissionEmployee(SalaryEmployee):
 
 
 # manager
-class Manager(SalaryEmployee):
+class Manager(SalaryEmployee, Worker):
     def work(self, hours):
         print(f'{self.name} screams and yells for {hours} hours.')
 
 
 # secretary
-class Secretary(SalaryEmployee):
+class Secretary(SalaryEmployee, Worker):
     def work(self, hours):
         print(f'{self.name} expends {hours} hours doing office paperwork.')
 
 
 # sales person
-class SalesPerson(CommissionEmployee):
+class SalesPerson(CommissionEmployee, Worker):
     def work(self, hours):
         print(f'{self.name} expends {hours} hours on the phone.')
 
 
 # factory workers
-class FactoryWorker(HourlyEmployee):
+class FactoryWorker(HourlyEmployee, Worker):
     def work(self, hours):
         print(f'{self.name} manufactures gadgets for {hours} hours.')
