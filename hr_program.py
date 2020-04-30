@@ -1,8 +1,9 @@
 import hr
+import employees
 
-salary_employee = hr.SalaryEmployee(1, 'John Smith', 1500)
-hourly_employee = hr.HourlyEmployee(2, 'Jane Doe', 40, 15)
-commission_employee = hr.CommissionEmployee(3, 'Kevin Bacon', 1000, 250)
+salary_employee = employees.SalaryEmployee(1, 'John Smith', 1500)
+hourly_employee = employees.HourlyEmployee(2, 'Jane Doe', 40, 15)
+commission_employee = employees.CommissionEmployee(3, 'Kevin Bacon', 1000, 250)
 
 payroll_system = hr.PayrollSystem()
 
